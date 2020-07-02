@@ -10,6 +10,8 @@
         
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         
+        <script src="test.js"></script>
+        
         <style>
             .nav-wrapper{
                 background-color: red;
@@ -20,6 +22,13 @@
                 background-color: red;
             }
         </style>
+        
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin=""></script>
             
     </head>
     
@@ -74,8 +83,8 @@
       </ul>
              
             </div>
-            <div class="col s12 m6 l6 orange">Map</div>
-            <div class="col s12 m3 l3" id="mylist"></div>
+            <div id="map" style="height:500px" class="col s12 m6 l6">Map</div>
+            <div class="col s12 m3 l3 yellow" id="mylist"></div>
         </div>
         
         
@@ -112,24 +121,55 @@
     </body>
         
     <script>
+        alert("Hello, my name is Sophia and welcome to my website on the Covid-19. On this website, you can track the change in the change of deaths, the people who have the disease and the nunber of recoveries. Click on Ok to see the webpage! P.S please ignore the chinese instructions...")
+        
+        alert("您好，我是 Sophia，欢迎来到我的网站。在这个网站里您可以看到这次疫情的死亡人数，这次疫情的感染人数和这次疫情的治好人数。您可以按一下“确定”来看这个网站！")
         
         makelist();
+        makemap();
         
         function makelist() {
-            data = [{pname:"NYC",cname:"USA",conf:218000},{pname:"Moscow",cname:"Russia",conf:202000},{pname:"Sao Polo",cname:"Brazil",conf:12000}];
+            //data = [{pname:"NYC",cname:"USA",conf:218000},{pname:"Moscow",cname:"Russia",conf:202000},{pname:"Sao Polo",cname:"Brazil",conf:12000}];
             
             mylist = document.getElementById("mylist")
-            myhtml = "<ul class= 'collection'>";
+            myhtml = "<ul class= 'collection'><h3>Top 5</h3>";
             
-            for (i=0; i<data.length; i++) {
+            for (i=0; i<5; i++) {
                 myhtml = myhtml+ "<li class= 'collection-item avatar'>";
-                myhtml = myhtml+ "<i class='material-icons circle'>folder</i>";
-                myhtml = myhtml+ "<b>" + data[i]['pname'] + "</b><br>"
+                myhtml = myhtml+ "<i class='material-icons circle'>adb</i>";
+                if (data[i]['pname']=="") {
+                    myhtml = myhtml+ "<b>" + data[i]['cname']+ "</b><br>";
+                } else {
+                    myhtml = myhtml+ "<b>" + data[i]['pname'] +"," + data[i]['cname'] + "</b><br>";
+                }
                 myhtml = myhtml+ data[i]['conf']+"</li>";
             }
             myhtml = myhtml + "</ul>";
             mylist.innerHTML= myhtml;
         } 
+        
+        
+        function makemap() {
+               // initialize the map
+            var map = L.map('map').setView([30,0], 1.5);
+
+          // load a tile layer
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png',
+    {
+      attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
+      maxZoom: 17,
+      minZoom: 1.5
+    }).addTo(map);
+    for (i=0;i<data.length;i++) {
+        L.circle([data[i]['lat'], data[i]['lon']], {
+        color:'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: data[i]['conf']*2
+        }).bindPopup(data[i]['pname'] + '&nbsp;' + data[i]['cname'] + ":" + data[i]['conf'],  { maxWidth: "auto"}).addTo(map);
+    }
+    
+}
         
     </script>
 
