@@ -1,6 +1,16 @@
 <html>
 
     <head>
+        
+        <!--javascript CDN-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha512-QEiC894KVkN9Tsoi6+mKf8HaCLJvyA6QIRzY5KrfINXYuP9NxdIkRQhGq3BZi0J4I7V5SidGM3XUQ5wFiMDuWg==" crossorigin="anonymous"></script>
+        
+        <!--CSS CDN-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css" integrity="sha512-SUJFImtiT87gVCOXl3aGC00zfDl6ggYAw5+oheJvRJ8KBXZrr/TMISSdVJ5bBarbQDRC2pR5Kto3xTR0kpZInA==" crossorigin="anonymous" />
+        
+        
+        
+        <!--heading(setting)-->
         <title>Covid-19 Traker</title> 
          <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -10,7 +20,7 @@
         
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         
-        <script src="test.js"></script>
+        <script src="06-21-2020.js"></script>
         
         <style>
             .nav-wrapper{
@@ -21,11 +31,30 @@
             .page-footer{
                 background-color: red;
             }
+            
+            .heading {
+                padding-left: 500px;
+            }
+            
+            .container {
+                padding-left: 300px;
+            }
+            
+            .card {
+                color: crimson;
+                background-color: floralwhite;
+            }
+            
+            .card-title {
+                color: crimson;
+                background-color: floralwhite;
+            }
         </style>
         
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
   crossorigin=""/>
+        
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
   crossorigin=""></script>
@@ -34,7 +63,7 @@
     
     <body>
         
-        <nav>
+        <nav><!--Navigation bar-->
             <div class="nav-wrapper red">
               <a href="#" class="brand-logo"><img src="covid1.png" style="width: 65px">
               <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -45,55 +74,35 @@
             </div>
         </nav>
             
-         <div class="row">
-            <div class="col s12 m3 l3"><!--List-->
-                    <ul class="collection">
-        <li class="collection-item avatar">
-          <img src="picachu.jpeg" alt="" class="circle">
-          <span class="title">Title</span>
-          <p>First Line <br>
-             Second Line
-          </p>
-          <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-        </li>
-        <li class="collection-item avatar">
-          <i class="material-icons circle">folder</i>
-          <span class="title">Title</span>
-          <p>First Line <br>
-             Second Line
-          </p>
-          <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-        </li>
-        <li class="collection-item avatar">
-          <i class="material-icons circle green">insert_chart</i>
-          <span class="title">Title</span>
-          <p>First Line <br>
-             Second Line
-          </p>
-          <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-        </li>
-        <li class="collection-item avatar">
-          <i class="material-icons circle red">play_arrow</i>
-          <span class="title">Title</span>
-          <p>First Line <br>
-             Second Line
-          </p>
-          <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-        </li>
-      </ul>
-             
-            </div>
-            <div id="map" style="height:500px" class="col s12 m6 l6">Map</div>
-            <div class="col s12 m3 l3 yellow" id="mylist"></div>
-        </div>
-        
-        
-        <h1>Covid-19 Dashboard</h1>
+        <h1 class="heading">Covid-19 Traker</h1><!--title-->
         <p class="container">This Softwere would provide timely info about the pendemic.</p>
-        <a href="https://cnn.com" target="_blank">CNN</a><br>
-        <img src="picachu.jpeg">
             
-        <footer class="page-footer">
+         <div class="row"><!--format setting-->
+            <div class="col s12 m3 l3" style="width: 50%">
+                <canvas id="chartjs-2"></canvas>
+            </div><!--graph placing place-->
+             
+                <div class="row"><!--card-->
+                    <div class="col s12 m6">
+                        <div class="card blue-grey darken-1">
+                            <div class="card-content white-text">
+                                <span class="card-title">Warnings!!</span>
+                                <p class="card">If you are outside of China, don't go outside! If in US and is protesting, keep safe. If in Beijing, don't dare to go outside. If in other parts of China, go as if you are free.</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="#"></a>
+                                <a href="#"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+             
+            <div id="map" style="height:500px" class="col s12 m8 l8"></div><!--map setting and placing place-->
+            <div class="col s12 m4 l4 yellow" id="mylist"></div><!--list setting-->
+        </div>
+            
+        <footer class="page-footer"><!--footer-->
           <div class="container">
             <div class="row">
               <div class="col l6 s12">
@@ -127,22 +136,23 @@
         
         makelist();
         makemap();
+        makechart();
         
         function makelist() {
             //data = [{pname:"NYC",cname:"USA",conf:218000},{pname:"Moscow",cname:"Russia",conf:202000},{pname:"Sao Polo",cname:"Brazil",conf:12000}];
             
             mylist = document.getElementById("mylist")
-            myhtml = "<ul class= 'collection'><h3>Top 5</h3>";
+            myhtml = "<ul class= 'collection'><h3>Top 5 (In confermed order)</h3>";
             
             for (i=0; i<5; i++) {
                 myhtml = myhtml+ "<li class= 'collection-item avatar'>";
                 myhtml = myhtml+ "<i class='material-icons circle'>adb</i>";
                 if (data[i]['pname']=="") {
-                    myhtml = myhtml+ "<b>" + data[i]['cname']+ "</b><br>";
+                    myhtml = myhtml+ "<b>" + data[i]['cname']+': '+'&nbsp;'+'Recoveries: '+ data[i]['recov'] +'&nbsp;'+'Deaths: '+ data[i]['deaths'];
                 } else {
-                    myhtml = myhtml+ "<b>" + data[i]['pname'] +"," + data[i]['cname'] + "</b><br>";
+                    myhtml = myhtml+ "<b>" + data[i]['pname'] +"," + data[i]['cname']+ ': '+'&nbsp;'+'Recoveries: '+ data[i]['recov'] +'&nbsp;'+'Deaths: '+ data[i]['deaths'] + "</b><br>";
                 }
-                myhtml = myhtml+ data[i]['conf']+"</li>";
+                myhtml = myhtml+ "Confermed: " +data[i]['conf']+"</li>";
             }
             myhtml = myhtml + "</ul>";
             mylist.innerHTML= myhtml;
@@ -170,6 +180,16 @@
     }
     
 }
+        
+        function makechart() {
+            
+        labels = ['NYC','Mowscow','france','turky','iran'];
+        data = ['2000303','1000000','1234556','24567','4794'];
+        
+        new Chart(document.getElementById("chartjs-2"),{"type":"horizontalBar","data":{"labels": labels,"datasets":[{"label":"My First Dataset","data": data,"fill":false,"backgroundColor":["rgba(255, 99, 132, 0.2)","rgba(255, 159, 64, 0.2)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],"borderColor":["rgb(255, 99, 132)","rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],"borderWidth":1}]},"options":{"scales":{"xAxes":[{"ticks":{"beginAtZero":true}}]}}});
+    
+            
+        }
         
     </script>
 
