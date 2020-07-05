@@ -20,7 +20,7 @@
         
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         
-        <script src="06-21-2020.js"></script>
+        <script src="07-03-2020.js"></script>
         
         <style>
             .nav-wrapper{
@@ -84,7 +84,7 @@
              
                 <div class="row"><!--card-->
                     <div class="col s12 m6">
-                        <div class="card blue-grey darken-1">
+                        <div class="card red darken-1">
                             <div class="card-content white-text">
                                 <span class="card-title">Warnings!!</span>
                                 <p class="card">If you are outside of China, don't go outside! If in US and is protesting, keep safe. If in Beijing, don't dare to go outside. If in other parts of China, go as if you are free.</p>
@@ -99,7 +99,7 @@
              
              
             <div id="map" style="height:500px" class="col s12 m8 l8"></div><!--map setting and placing place-->
-            <div class="col s12 m4 l4 yellow" id="mylist"></div><!--list setting-->
+            <div class="col s12 m4 l4 red" id="mylist"></div><!--list setting-->
         </div>
             
         <footer class="page-footer"><!--footer-->
@@ -113,9 +113,9 @@
                 <h5 class="white-text">More links</h5>
                 <ul>
                   <li><a class="grey-text text-lighten-3" href="https://coronavirus.jhu.edu/map.html" target="_blank">Johns Hopkins' Coronavirus</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://materializecss.com/getting-started.html" target="_blank">Materialise CSS</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://leafletjs.com/download.html" target="_blank">Leaflet</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://www.chartjs.org/" target="_blank">Chart.js</a></li>
                 </ul>
               </div>
             </div>
@@ -123,7 +123,7 @@
           <div class="footer-copyright">
             <div class="container">
             © 2020 Copyright Sophia
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            <a class="grey-text text-lighten-4 right" href="#!">About the maker</a>
             </div>
           </div>
         </footer>
@@ -142,7 +142,7 @@
             //data = [{pname:"NYC",cname:"USA",conf:218000},{pname:"Moscow",cname:"Russia",conf:202000},{pname:"Sao Polo",cname:"Brazil",conf:12000}];
             
             mylist = document.getElementById("mylist")
-            myhtml = "<ul class= 'collection'><h3>Top 5 (In confermed order)</h3>";
+            myhtml = "<ul class= 'collection'><h4>Top 5 (In confermed order)</h4>";
             
             for (i=0; i<5; i++) {
                 myhtml = myhtml+ "<li class= 'collection-item avatar'>";
@@ -183,12 +183,60 @@
         
         function makechart() {
             
-        labels = ['NYC','Mowscow','france','turky','iran'];
-        data = ['2000303','1000000','1234556','24567','4794'];
-        
-        new Chart(document.getElementById("chartjs-2"),{"type":"horizontalBar","data":{"labels": labels,"datasets":[{"label":"My First Dataset","data": data,"fill":false,"backgroundColor":["rgba(255, 99, 132, 0.2)","rgba(255, 159, 64, 0.2)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],"borderColor":["rgb(255, 99, 132)","rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],"borderWidth":1}]},"options":{"scales":{"xAxes":[{"ticks":{"beginAtZero":true}}]}}});
-    
+            //labels = ['nyc','moscow','france','iran','turkey'];
+            //mydata = [210000,207000,150000,120000,75000];
+
+            label5 = [];
+            data5 = [];
+            for (i=0;i<5;i++) {
+                if (data[i]['pname'] != "") {
+                   label5.push(data[i]['pname'] + ", " + data[i]['cname']); 
+                } else {
+                   label5.push(data[i]['cname']); 
+                }
+                data5.push(data[i]['conf']);
+            }
             
+            
+            chart = new Chart(document.getElementById("chartjs-2"),{"type":"horizontalBar","data":{"labels": label5,"datasets":[{"label":"", "data": data5,"fill":false,"backgroundColor":["rgba(255, 99, 132, 0.2)","rgba(255, 159, 64, 0.2)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],"borderColor":["rgb(255, 99, 132)","rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"], "borderWidth":1}]} ,"options":{"scales":{"xAxes":[{"ticks":{"beginAtZero":true}}]},
+            onClick:function(e, items){
+            if ( items.length == 0 ) return; //Clicked outside any bar.
+            //openModal(items[0]['_model']['label']);
+            console.log(items[i]['_model']['label'])
+            },tooltips: {
+                custom: function(tooltip) {
+                    if (!tooltip) return;
+                    // disable displaying the color box;
+                    tooltip.displayColors = false;
+                  },
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return "Cases: " + tooltipItem.xLabel;
+                    }
+                }   
+            },
+            title: {
+                  display: true,
+                  text: 'Confirmed cases',
+                  position: 'top'
+            }
+            }                                                       
+            });
+            
+        }
+        
+        function openModal(place) {
+            var modal = document.getElementById("myModal");
+            var modaltext = document.getElementById("modaltext");
+            modal.style.display = "block";
+            modaltext.innerHTML = place;
+        }
+        
+        window.onclick = function(event) {
+          var modal = document.getElementById("myModal");
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
         }
         
     </script>
